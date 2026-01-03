@@ -1,0 +1,365 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: #0b0b0b;
+    color: #f2f2ec;
+    font-family: "Inter", system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top {
+    position: absolute;
+    top: 28px;
+    display: flex;
+    gap: 14px;
+}
+
+.top button {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    color: #bbb;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.main {
+    text-align: center;
+    width: 100%;
+}
+
+#modeLabel {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #888;
+    margin-bottom: 18px;
+}
+
+#word {
+    font-size: 72px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 10px 0 20px;
+}
+
+#progress {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #777;
+    margin-top: 18px;
+}
+
+.controls {
+    margin-top: 40px;
+}
+
+.controls button {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    color: #eee;
+    padding: 10px 26px;
+    border-radius: 6px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.controls button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+#end {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#end h2 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+#summary {
+    color: #aaa;
+    letter-spacing: 1px;
+}
+
+#historyBtn {
+    margin-top: 30px;
+    background: none;
+    border: 1px solid #555;
+    color: #ddd;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#history {
+    margin-top: 20px;
+    max-width: 700px;
+    color: #777;
+    line-height: 1.6;
+    text-align: center;
+}
+
+#end.hidden {
+    display: none;
+}
+
+.endControls {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#history {
+    margin-top: 30px;
+    max-width: 700px;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+    line-height: 1.6;
+}
+
+/* WAT history */
+.history-wat span {
+    display: inline-block;
+    margin: 4px 8px;
+    opacity: 0.85;
+}
+
+/* SRT history */
+.history-srt div {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ============================
+   MODE SELECTOR (WAT / SRT)
+   ============================ */
+
+.modeBtn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+    padding: 10px 24px;
+    border-radius: 6px;
+    letter-spacing: 2px;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.modeBtn.active {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.5);
+    color: white;
+    box-shadow: 0 0 12px rgba(255,255,255,0.15);
+}
+
+.modeBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ============================
+   CONTROL BUTTONS
+   ============================ */
+
+.controls button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    padding: 10px 26px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+#start {
+    border-color: rgba(255,255,255,0.4);
+}
+
+#start:not(:disabled):hover {
+    background: rgba(255,255,255,0.15);
+}
+
+#pause {
+    border-color: rgba(200,200,200,0.4);
+}
+
+#stop {
+    border-color: rgba(255,100,100,0.5);
+    color: rgba(255,150,150,0.8);
+}
+
+#stop:not(:disabled):hover {
+    background: rgba(255,80,80,0.15);
+}
+
+/* Disabled state */
+
+.controls button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* ============================
+   DEBRIEF SCREEN
+   ============================ */
+
+#debriefTitle {
+    font-size: 36px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+}
+
+#summary {
+    color: #aaa;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+.debriefHistory {
+    max-width: 800px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* WAT history */
+.history-wat span {
+    display: inline-block;
+    margin: 6px 10px;
+    font-size: 15px;
+    opacity: 0.85;
+}
+
+/* SRT history */
+.history-srt div {
+    margin-bottom: 18px;
+    line-height: 1.6;
+    font-size: 15px;
+    color: #ddd;
+}
+
+.history-srt div::before {
+    content: "";
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* ============================
+   SRT / WAT DISPLAY FRAME
+   ============================ */
+
+.situationFrame {
+    all: unset;
+}
+
+#word {
+    width: 800px;
+    max-width: 90vw;
+    height: 320px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+
+    padding: 40px 50px;
+    text-align: center;
+
+    font-size: 2.5rem;       /* slightly bigger for WAT */
+    line-height: 1.35;
+    font-weight: 600;
+
+    color: white;
+    background: rgba(255,255,255,0.035);   /* middle ground between grey & black */
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06),
+                0 20px 60px rgba(0,0,0,0.6);
+
+    overflow: hidden;        /* NO scrollbars */
+    word-break: break-word;
+}
+
+/* Mode-specific typography */
+body.wat #word {
+    font-size: 3rem;      /* WAT bigger */
+    letter-spacing: 2px;
+}
+
+body.srt #word {
+    font-size: 2rem;      /* SRT more readable */
+    letter-spacing: 0.3px;
+}
+
+
+/* ============================
+   HISTORY WIDTH FIX
+   ============================ */
+
+.debriefHistory {
+    width: 800px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* ============================
+   RESET BUTTON FIX
+   ============================ */
+
+#resetBtn {
+    margin-top: 28px;
+    padding: 12px 26px;
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #ffb3b3;
+    background: rgba(255,80,80,0.12);
+
+    border: 1px solid rgba(255,80,80,0.35);
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#resetBtn:hover {
+    background: rgba(255,80,80,0.22);
+    border-color: rgba(255,80,80,0.6);
+    color: white;
+}
+
+
+#history {
+    width: 900px;
+    max-width: 90vw;
+    margin: 30px auto 0;
+    padding: 20px 30px;
+
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+
+    max-height: 300px;
+    overflow-y: auto;        /* history scrolls — not the test */
+}

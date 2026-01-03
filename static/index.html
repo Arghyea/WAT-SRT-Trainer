@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WAT SRT Trainer</title>
+
+    <!-- Force browser to NEVER restore old test state -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="top">
+        <button id="wat" class="modeBtn active">WAT</button>
+        <button id="srt" class="modeBtn">SRT</button>
+    </div>
+
+    <div class="main">
+        <div id="modeLabel">MODE: WAT</div>
+        <div class="situationFrame">
+            <div id="word">Ready</div>
+        </div>
+
+        <div id="progress"></div>
+
+        <div class="controls">
+            <button id="start">Start</button>
+            <button id="pause" disabled>Pause</button>
+            <button id="stop" disabled>Stop</button>
+        </div>
+    </div>
+
+    <!-- Must be hidden by default -->
+    <div id="end" class="hidden">
+        <h2 id="debriefTitle">TEST COMPLETE</h2>
+        <p id="summary"></p>
+    <div class="endControls">
+        <button id="historyBtn">View History</button>
+        <button id="resetBtn" class="reset-btn">Reset</button>
+    </div>
+    <div id="history" class="debriefHistory"></div>
+
+    </div>
+
+    <script src="/static/app.js"></script>
+
+</body>
+</html>
