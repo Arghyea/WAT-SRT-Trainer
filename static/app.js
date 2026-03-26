@@ -30,7 +30,6 @@ function updateMode() {
     document.body.className = mode;
 }
 
-
 // ---------------- START ----------------
 
 document.getElementById("start").onclick = async () => {
@@ -41,7 +40,7 @@ document.getElementById("start").onclick = async () => {
     current = 0;
 
     document.getElementById("end").classList.add("hidden");
-    document.getElementById("word").innerText = "Ready";
+    document.getElementById("word").innerText = "";
     document.getElementById("progress").innerText = "";
 
     document.getElementById("start").disabled = true;
@@ -50,11 +49,44 @@ document.getElementById("start").onclick = async () => {
 
     await fetch(`/start/${mode}`);
 
-    document.getElementById("word").innerText = "";
-    document.getElementById("progress").innerText = "";
-
-    scheduleNext();
+    startCountdown(); // 👈 THIS WAS MISSING PROPERLY
 };
+
+// ---------------- COUNTDOWN ----------------
+
+function startCountdown() {
+    let count = 10;
+
+    document.getElementById("word").innerText = `Starting in ${count}`;
+
+    interval = setInterval(async () => {
+        if (paused) return;
+
+        count--;
+
+        if (count > 0) {
+            document.getElementById("word").innerText = `Starting in ${count}`;
+        } else {
+            clearInterval(interval);
+
+            // 🔥 SHOW FIRST WORD IMMEDIATELY
+            const res = await fetch("/next");
+            const data = await res.json();
+
+            if (data.done) {
+                finish();
+                return;
+            }
+
+            current = data.count;
+            document.getElementById("word").innerText = data.word;
+            document.getElementById("progress").innerText = `${current} / ${total}`;
+
+            // 🔥 THEN start normal cycle
+            scheduleNext();
+        }
+    }, 1000);
+}
 
 // ---------------- PAUSE ----------------
 
@@ -64,18 +96,18 @@ document.getElementById("pause").onclick = () => {
     if (paused) {
         paused = false;
         document.getElementById("pause").innerText = "Pause";
-        scheduleNext();
     } else {
         paused = true;
         document.getElementById("pause").innerText = "Resume";
-        clearTimeout(interval);
     }
 };
 
 // ---------------- STOP ----------------
 
 document.getElementById("stop").onclick = () => {
+    clearInterval(interval);
     clearTimeout(interval);
+
     started = false;
     paused = false;
 
@@ -94,7 +126,10 @@ function scheduleNext() {
     let delay = mode === "wat" ? 15000 : 30000;
 
     interval = setTimeout(async () => {
-        if (paused) return;
+        if (paused) {
+            scheduleNext();
+            return;
+        }
 
         const res = await fetch("/next");
         const data = await res.json();
@@ -116,6 +151,8 @@ function scheduleNext() {
 
 function finish() {
     clearTimeout(interval);
+    clearInterval(interval);
+
     started = false;
 
     document.getElementById("end").classList.remove("hidden");
@@ -124,12 +161,10 @@ function finish() {
             ? "WAT • 60 Words • 15 Minutes"
             : "SRT • 60 Situations • 30 Minutes";
 
-
     document.getElementById("start").disabled = false;
     document.getElementById("pause").disabled = true;
     document.getElementById("stop").disabled = true;
     document.getElementById("debriefTitle").innerText = "TEST COMPLETE";
-
 }
 
 // ---------------- HISTORY ----------------
@@ -164,6 +199,8 @@ document.getElementById("resetBtn").onclick = async () => {
     await fetch("/reset");
 
     clearTimeout(interval);
+    clearInterval(interval);
+
     started = false;
     paused = false;
     current = 0;
